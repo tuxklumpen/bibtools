@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fabibtools"
+name = "bibtools"
 version = "0.1.0"
 description = ""
 authors = ["fabian <fmklute@gmail.com>"]
 readme = "README.md"
-packages = [{include="fabibtools"}]
+packages = [{include="bibtools"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -14,7 +14,7 @@ beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 
 [tool.poetry.scripts]
-fabibtools = "fabibtools.__main__:main"
+bibtools = "bibtools.__main__:main"
 
 [build-system]
 requires = ["poetry-core"]

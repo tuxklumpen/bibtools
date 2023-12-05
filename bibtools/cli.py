@@ -16,6 +16,9 @@ def dblpauthor(id, output):
     with open(output, "w") as f:
         if id:
             bib = dblp.bibliography_by_id(id)
+            if format:
+                bib = bibformat(bib)
+                
             f.write(bib)
 
 @cli.command()
@@ -30,7 +33,6 @@ def buildjournallist(output, start_page, start_link):
 @cl.option("--remove-dblp", type=bool, default=True, help="Delete bibsource, timestamp, and biburl.")
 @cl.option("--remove-url-if-doi", type=bool, default=True, help="Remove url field if doi is present.")
 @cl.option("--expand-journal", type=bool, default=True, help="Try to expand abbreviated journal entries.")
-@cl.option("--dblp-booktitles", type=bool, default=True, help="Try to rewrite booktitles in DBLP entries.")
 @cl.argument("input", type=cl.Path(exists=True, dir_okay=False, path_type=pl.Path))
 @cl.argument("output", type=cl.Path(writable=True, dir_okay=False, path_type=pl.Path))
 def format(remove_dblp, remove_url_if_doi, expand_journal, dblp_booktitles, input, output):

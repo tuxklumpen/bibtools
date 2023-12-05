@@ -1,10 +1,9 @@
 import csv
 from .middleware import *
-from .dblp.dblpbooktitle import *
 from .dblp.dblpconstants import DBLP_EXTRA_FIELDS
 import bibtexparser as btxp
 
-def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bool = True, expand_journal: bool = True, dblp_booktitles: bool = True) -> str:
+def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bool = True, expand_journal: bool = True) -> str:
     middleware = [
                 # transforms {\"o} -> ö, removes curly braces, etc.
                 mw.LatexDecodingMiddleware(),
@@ -36,18 +35,12 @@ def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bo
         # Expand short journals
         middleware.append(ExpandJournal(short_to_long=journallist, long=longs))
 
-    if dblp_booktitles:
-        middleware.append(DBLPBooktitleParts())
-
     library = btxp.parse_string(
         bibliography,
         append_middleware=middleware
     )
 
     formatmiddleware = []
-
-    # if dblp_booktitles:
-        # formatmiddleware.append(DBLPBooktitleMerge())
 
     formatmiddleware += [mw.MergeNameParts(), mw.MergeCoAuthors(), mw.LatexEncodingMiddleware()]
 

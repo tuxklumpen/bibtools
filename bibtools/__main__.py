@@ -1,4 +1,4 @@
-from fabibtools.cli import cli
+from bibtools.cli import cli
 
 def main():
     cli()
