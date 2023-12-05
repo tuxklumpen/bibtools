@@ -26,7 +26,7 @@ def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bo
     if expand_journal:
         journallist = {}
         longs = set()
-        with open("mybigfatjournallist2.csv") as f:
+        with open("journallist.csv") as f:
             journals = csv.DictReader(f, delimiter=';')
             for j in journals:
                 journallist[j['short']] = j['long']
