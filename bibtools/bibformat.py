@@ -2,6 +2,7 @@ import csv
 from .middleware import *
 from .dblp.dblpconstants import DBLP_EXTRA_FIELDS
 import bibtexparser as btxp
+import importlib.resources
 
 def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bool = True, expand_journal: bool = True) -> str:
     middleware = [
@@ -26,11 +27,11 @@ def bibformat(bibliography: str, remove_dblp: bool = True, remove_url_if_doi: bo
     if expand_journal:
         journallist = {}
         longs = set()
-        with open("journallist.csv") as f:
-            journals = csv.DictReader(f, delimiter=';')
-            for j in journals:
-                journallist[j['short']] = j['long']
-                longs.add(j['long'])
+        dblpjournals = (importlib.resources.files('bibtools.dblp') / "journallist.csv").read_text()
+        journals = csv.DictReader(dblpjournals.splitlines(), delimiter=';')
+        for j in journals:
+            journallist[j['short']] = j['long']
+            longs.add(j['long'])
 
         # Expand short journals
         middleware.append(ExpandJournal(short_to_long=journallist, long=longs))
