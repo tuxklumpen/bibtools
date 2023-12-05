@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "fabibtools"
+version = "0.1.0"
+description = ""
+authors = ["fabian <fmklute@gmail.com>"]
+readme = "README.md"
+packages = [{include="fabibtools"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1.7"
+bibtexparser = {git = "https://github.com/sciunto-org/python-bibtexparser", rev = "main"}
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+
+[tool.poetry.scripts]
+fabibtools = "fabibtools.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
